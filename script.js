@@ -40,6 +40,12 @@ function playTone(playbackRate) {
     }
 }
 
+// Function to start the animation and sound
+function startAnimation() {
+    if (animationStarted) return; // Prevent multiple initializations
+    animationStarted = true;
+
+
 // Function to animate orbs
 function animate() {
     requestAnimationFrame(animate);
@@ -69,5 +75,13 @@ function animate() {
     });
 }
 
-// Start the animation loop
-animate();
+
+    animate();
+}
+
+// Add event listeners to the canvas
+canvas.addEventListener('click', startAnimation);
+canvas.addEventListener('touchstart', startAnimation);
+
+// Flag to prevent multiple initializations
+let animationStarted = false;
