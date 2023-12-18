@@ -13,7 +13,7 @@ if (audioContext.state === 'suspended') {
 
 // Load C5 file
 let c5Buffer = null;
-fetch('/C5.mp3') // Replace with the actual path to your C5 WAV file
+fetch('https://blodsvorr.github.io/SONIFORMS/C5.mp3') // Replace with the actual path to your C5 WAV file
     .then(response => response.arrayBuffer())
     .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
     .then(audioBuffer => {
