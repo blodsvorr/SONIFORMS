@@ -25,9 +25,9 @@ fetch('https://blodsvorr.github.io/SONIFORMS/C5.mp3')
 
 // Orb data with 12 orbs
 const orbData = [];
-const baseFrequency = 523.25; // Frequency of C5
+const baseFrequency = 261.63; // Frequency of C3
 for (let i = 0; i < 12; i++) {
-    const playbackRate = Math.pow(2, i / 12);
+    const playbackRate = baseFrequency * Math.pow(2, i / 12);
     // Gradient from indigo to purple
     const color = `hsl(${360 - i * 15}, 100%, 50%)`;
     orbData.push({
@@ -36,7 +36,10 @@ for (let i = 0; i < 12; i++) {
         period: 1 + i,
         playbackRate,
         angle: Math.PI / 2,
-        lastRevolution: 0
+        lastRevolution: 0,
+        tail: [],
+        size: 5,
+        brightness: 50,
     });
 }
 
