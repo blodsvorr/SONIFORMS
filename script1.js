@@ -28,7 +28,8 @@ const orbData = [];
 const baseFrequency = 523.25; // Frequency of C5
 for (let i = 0; i < 12; i++) {
     const playbackRate = Math.pow(2, i / 12);
-    const color = `hsl(${360 - i * 30}, 100%, 50%)`; // Gradient from indigo to purple
+    // Gradient from indigo to purple
+    const color = `hsl(${360 - i * 15}, 100%, 50%)`;
     orbData.push({
         color,
         orbitRadius: 75 + i * 10,
