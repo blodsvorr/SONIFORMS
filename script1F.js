@@ -73,7 +73,7 @@ function animate() {
 
     orbData.forEach((data, index) => {
         // Update orb position
-        data.angle -= 2 * Math.PI / data.period * 0.01;
+        data.angle -= 2 * ( 2 * Math.PI / data.period * 0.01 );
 
         const x = canvas.width / 2 + data.orbitRadius * Math.cos(data.angle);
         const y = canvas.height / 2 + data.orbitRadius * Math.sin(data.angle);
