@@ -1,4 +1,68 @@
-// ... (Previous code)
+// Set up the canvas and its context
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const ctx = canvas.getContext('2d');
+
+// Set up the audio context
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+document.addEventListener('click', () => {
+    if (audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+});
+
+// Load C5 file
+let c5Buffer = null;
+fetch('https://blodsvorr.github.io/SONIFORMS/C5.mp3')
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+    .then(audioBuffer => {
+        c5Buffer = audioBuffer;
+    })
+    .catch(error => console.error('Error loading audio file:', error));
+
+// Orb data with 12 orbs
+const orbData = [];
+const baseFrequency = 523.25; // Frequency of C5
+for (let i = 0; i < 12; i++) {
+    const playbackRate = Math.pow(2, i / 12);
+    // Gradient from indigo to purple
+    const color = `hsl(${360 - i * 15}, 100%, 50%)`;
+    orbData.push({
+        color,
+        orbitRadius: 75 + i * 10,
+        period: 1 + i,
+        playbackRate,
+        angle: Math.PI / 2,
+        lastRevolution: 0
+    });
+}
+
+// Function to play the C5 sample at a specific playback rate
+function playTone(playbackRate) {
+    if (c5Buffer) {
+        const source = audioContext.createBufferSource();
+        source.buffer = c5Buffer;
+        source.playbackRate.setValueAtTime(playbackRate, audioContext.currentTime);
+        source.connect(audioContext.destination);
+        source.start();
+    } else {
+        console.log('Audio buffer is not loaded yet.');
+    }
+}
+
+// Function to start the animation and sound
+function startAnimation() {
+    if (!animationStarted) {
+        animationStarted = true;
+        animate();
+    }
+}
+
+// Flag to prevent multiple initializations
+let animationStarted = false;
 
 // Function to draw orbs with tails
 function drawOrbsWithTails() {
