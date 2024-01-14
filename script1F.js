@@ -35,8 +35,8 @@ for (let i = 0; i < 12; i++) {
         orbitRadius: 75 + i * 10,
         period: 1 + i,
         playbackRate,
-        angle: Math.PI / 2,
-        lastRevolution: 0
+        angle: Math.PI * (3 / 2),
+        ZOFFSET: Math.PI * (3 / 2),
     });
 }
 
@@ -73,7 +73,7 @@ function animate() {
 
     orbData.forEach((data, index) => {
         // Update orb position
-        data.angle -= 1.5 * ( 2 * Math.PI / data.period * 0.01 );
+        data.angle -= ( 1.5 * ( 2*Math.PI / data.period * 0.01 ) % 2*Math.PI ;
 
         const x = canvas.width / 2 + data.orbitRadius * Math.cos(data.angle);
         const y = canvas.height / 2 + data.orbitRadius * Math.sin(data.angle);
@@ -85,9 +85,8 @@ function animate() {
         ctx.fill();
 
         // Play tone on revolution completion
-        const revolutions = Math.floor((2 * Math.PI - data.angle) / (2 * Math.PI));
-        if (revolutions > data.lastRevolution) {
-            playTone(data.playbackRate);
+        if (data.angle - data.ZOFFSET = O) {
+             playTone(data.playbackRate);
             data.lastRevolution = revolutions;
         }
     });
